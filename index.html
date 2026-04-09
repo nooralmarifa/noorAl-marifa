@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ثانوية نور المعرفة</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  /* متغيرات الألوان للوضع الليلي (الافتراضي) */
+  --bg-gradient: linear-gradient(135deg,#0f172a,#1e293b);
+  --card-bg-gradient: linear-gradient(135deg,#1f2937,#111827);
+  --text-color: white;
+  --small-card-bg: #1f2937;
+  --small-card-hover-bg: #374151;
+  --footer-color: #aaa;
+  --big-btn-text: white;
+}
+
+[data-theme="light"] {
+  /* متغيرات الألوان للوضع النهاري */
+  --bg-gradient: linear-gradient(135deg,#e2e8f0,#f1f5f9);
+  --card-bg-gradient: linear-gradient(135deg,#ffffff,#f8fafc);
+  --text-color: #1e293b;
+  --small-card-bg: #f1f5f9;
+  --small-card-hover-bg: #e2e8f0;
+  --footer-color: #475569;
+  --big-btn-text: #0f172a; /* لون غامق للنص داخل الزر الأزرق ليتناسب مع الوضع الفاتح */
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo', sans-serif;
+transition: background 0.3s ease, color 0.3s ease; /* إضافة تأثير ناعم عند التحويل */
+}
+
+body{
+direction:rtl;
+background: var(--bg-gradient);
+color: var(--text-color);
+}
+
+/* ===== الهيدر ===== */
+
+.hero{
+padding:40px 20px;
+text-align:center;
+}
+
+.logo{
+width:130px;
+height:130px;
+margin-bottom:15px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #4facfe;
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
+}
+
+.school-name{
+font-size:32px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.subtitle{
+font-size:16px;
+opacity:.8;
+}
+
+/* ===== الكروت ===== */
+
+.container{
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.card{
+background: var(--card-bg-gradient);
+border-radius:20px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+/* زر كبير */
+
+.big-btn{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:18px;
+border-radius:15px;
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+color: var(--big-btn-text);
+text-decoration:none;
+font-size:18px;
+font-weight:bold;
+transition:.3s;
+}
+
+.big-btn:hover{
+transform:scale(1.03);
+}
+
+/* معلومات */
+
+.info{
+line-height:1.9;
+font-size:15px;
+opacity:.9;
+}
+
+/* شبكة */
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.small-card{
+background: var(--small-card-bg);
+padding:15px;
+border-radius:15px;
+text-align:center;
+transition:.3s;
+}
+
+.small-card:hover{
+background: var(--small-card-hover-bg);
+}
+
+/* ===== المدرسين ===== */
+
+.teacher-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background: var(--card-bg-gradient);
+border-radius:15px;
+padding:15px;
+margin-top:10px;
+transition:.3s;
+border-right:4px solid #4facfe;
+}
+
+.teacher-card:hover{
+transform:scale(1.02);
+}
+
+.teacher-name{
+font-size:16px;
+font-weight:bold;
+}
+
+.teacher-subject{
+font-size:13px;
+opacity:.8;
+margin-top:5px;
+}
+
+/* الفوتر */
+
+.footer{
+text-align:center;
+padding:15px;
+font-size:13px;
+color: var(--footer-color);
+}
+
+/* ===== زر تبديل الوضع (ليلي/نهاري) ===== */
+.theme-switch-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+}
+
+.theme-switch-btn {
+  background: linear-gradient(135deg,#4facfe,#00f2fe);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #0f172a; /* لون الأيقونة */
+  transition: transform 0.3s ease;
+}
+
+.theme-switch-btn:hover {
+  transform: scale(1.1);
+}
+
+/* أيقونات الوضع */
+.theme-switch-btn .sun-icon {
+  display: none; /* مخفية في الوضع الليلي الافتراضي */
+}
+
+[data-theme="light"] .theme-switch-btn .moon-icon {
+  display: none; /* مخفية في الوضع النهاري */
+}
+
+[data-theme="light"] .theme-switch-btn .sun-icon {
+  display: block; /* ظاهرة في الوضع النهاري */
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="theme-switch-wrapper">
+  <button class="theme-switch-btn" id="theme-switch-btn" aria-label="تبديل الوضع الليلي والنهاري">
+    <span class="moon-icon">🌙</span>
+    <span class="sun-icon">☀️</span>
+  </button>
+</div>
+
+<div class="hero">
+
+<img src="logo.jpeg" class="logo">
+
+<div class="school-name">
+ثانوية نور المعرفة الأهلية
+</div>
+
+<div class="subtitle">
+نحو تعليم متميز ومستقبل أفضل
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+<a href="home.html" class="big-btn">
+📊 مستوى الطالب
+<span>←</span>
+</a>
+</div>
+
+<div class="card">
+<h3>🏫 عن المدرسة</h3>
+<p class="info">
+مدرسة نور المعرفة الأهلية تقدم تعليماً حديثاً يعتمد على أفضل الأساليب التعليمية،
+مع متابعة دقيقة لمستوى الطلاب ونتائجهم.
+</p>
+</div>
+
+<div class="card">
+<h3>⭐ مميزاتنا</h3>
+
+<div class="grid">
+<div class="small-card">📚 تعليم حديث</div>
+<div class="small-card">👨‍🏫 كادر متميز</div>
+<div class="small-card">📊 متابعة مستمرة</div>
+<div class="small-card">🏆 نتائج عالية</div>
+</div>
+
+</div>
+
+<div class="card">
+<h3>📞 تواصل معنا</h3>
+<p class="info">
+📍 قضاء الحضر - القيارة - قرية السرت<br>
+📱 07774014618
+</p>
+</div>
+
+<div class="card">
+
+<h3>👨‍🏫 الهيئة التدريسية</h3>
+
+<div class="teacher-card">
+<div>
+<div class="teacher-name">أ. ابراهيم عبدالله </div>
+<div class="teacher-subject">مدير ثانوية نور المعرفة الأهلية -   مدرس رياضيات</div>
+</div>
+<div>📘</div>
+</div>
+
+<div class="teacher-card">
+<div>
+<div class="teacher-name">أ. أحمد يحيى</div>
+<div class="teacher-subject">هندسة أجهزة طبية- مدرس رياضيات</div>
+</div>
+<div>📖</div>
+</div>
+
+<div class="teacher-card">
+<div>
+<div class="teacher-name">أ. عدنان اللهيبي </div>
+<div class="teacher-subject">مدرس فيزياء</div>
+</div>
+<div>⚡</div>
+</div>
+
+<div class="teacher-card">
+<div>
+<div class="teacher-name">أ. شهاب أحمد  </div>
+<div class="teacher-subject">مدرس فيزياء</div>
+</div>
+<div>⚡</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+  ثانوية نور المعرفة الأهلية &copy; ٢٠٢٤
+</div>
+
+<script>
+  // الحصول على الزر وجسم الصفحة
+  const themeSwitchBtn = document.getElementById('theme-switch-btn');
+  const body = document.body;
+
+  // التحقق من وجود تفضيل سابق للمستخدم محفوض في التخزين المحلي (LocalStorage)
+  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+  // إذا وجد تفضيل سابق، قم بتطبيقه وتغيير الأيقونة
+  if (currentTheme) {
+      body.setAttribute('data-theme', currentTheme);
+  } else {
+      // الوضع الافتراضي هو الليلي، لذا نتأكد من عدم وجود سمة النهاري
+      body.removeAttribute('data-theme');
+  }
+
+  // إضافة مستمع للحدث (النقر) على الزر
+  themeSwitchBtn.addEventListener('click', function() {
+      // التحقق من الوضع الحالي
+      if (body.getAttribute('data-theme') === 'light') {
+          // إذا كان نهارياً، حوله لليلي (احذف السمة)
+          body.removeAttribute('data-theme');
+          // احفظ التفضيل كـ 'dark'
+          localStorage.setItem('theme', 'dark');
+      } else {
+          // إذا كان ليلياً (أو افتراضياً)، حوله لنهاري
+          body.setAttribute('data-theme', 'light');
+          // احفظ التفضيل كـ 'light'
+          localStorage.setItem('theme', 'light');
+      }
+  });
+</script>
+
+</body>
+</html>

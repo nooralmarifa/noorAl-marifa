@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتيجة الطالب - ثانوية نور المعرفة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* تعريف متغيرات الألوان للوضعين */
+        :root {
+            --bg-body: linear-gradient(135deg,#0f172a,#1e293b);
+            --bg-card: linear-gradient(135deg,#1f2937,#111827);
+            --text-main: white;
+            --text-sub: #cbd5e1;
+            --bg-table: rgba(15, 23, 42, 0.5);
+            --border-color: #374151;
+            --grade-bg: #1e293b;
+            --rank-bg: #1e293b;
+        }
+
+        [data-theme="light"] {
+            --bg-body: linear-gradient(135deg,#e2e8f0,#f8fafc);
+            --bg-card: linear-gradient(135deg,#ffffff,#f1f5f9);
+            --text-main: #1e293b;
+            --text-sub: #475569;
+            --bg-table: #ffffff;
+            --border-color: #cbd5e1;
+            --grade-bg: #f8fafc;
+            --rank-bg: #f1f5f9;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Cairo', sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body { 
+            direction: rtl; 
+            background: var(--bg-body); 
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 30px;
+        }
+
+        .app { 
+            width: 100%; 
+            max-width: 450px; 
+            background: transparent; 
+        }
+
+        /* ===== الهيدر ===== */
+        header { 
+            background: linear-gradient(135deg,#4facfe,#00f2fe);
+            color: white; 
+            padding: 25px; 
+            text-align: center; 
+            font-size: 22px; 
+            font-weight: 900; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            margin-bottom: 20px;
+        }
+
+        .container { padding: 15px; }
+
+        /* ===== الكرت الرئيسي ===== */
+        .card { 
+            background: var(--bg-card);
+            border-radius: 20px; 
+            padding: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+            margin-bottom: 20px; 
+        }
+
+        .name { 
+            font-size: 22px; 
+            font-weight: 900; 
+            text-align: center; 
+            margin-bottom: 8px;
+            color: #4facfe;
+        }
+
+        .info { 
+            text-align: center; 
+            color: var(--text-sub); 
+            margin-bottom: 15px; 
+            font-size: 16px;
+        }
+
+        /* ===== الجداول ===== */
+        .grades-container { 
+            background: var(--bg-table);
+            border: 1px solid var(--border-color); 
+            border-radius: 15px; 
+            overflow: hidden; 
+            margin-top: 10px; 
+            margin-bottom: 20px; 
+        }
+
+        .subject-row { 
+            display: grid; 
+            grid-template-columns: 2fr 1fr 1fr 1fr; 
+            text-align: center; 
+            padding: 12px 5px; 
+            border-bottom: 1px solid var(--border-color); 
+            align-items: center; 
+            font-size: 14px; 
+        }
+
+        .subject-row:last-child { border-bottom: none; }
+
+        .subject-header { 
+            background: linear-gradient(135deg,#4facfe,#00f2fe);
+            color: #0f172a; 
+            font-weight: 900; 
+        }
+
+        .subject-name { 
+            text-align: right; 
+            font-weight: 700; 
+            color: var(--text-main); 
+            padding-right: 10px; 
+        }
+
+        .grade-val { 
+            background: var(--grade-bg); 
+            color: #4facfe;
+            border-radius: 6px; 
+            padding: 5px 0; 
+            margin: 0 3px; 
+            font-weight: 900; 
+            border: 1px solid var(--border-color);
+        }
+
+        /* ===== الترتيب والغياب ===== */
+        .rank { 
+            background: var(--rank-bg); 
+            border-radius: 12px; 
+            padding: 12px; 
+            margin-top: 10px; 
+            text-align: center; 
+            font-size: 14px;
+            border-right: 4px solid #4facfe;
+            color: var(--text-main);
+        }
+
+        .absence-title { 
+            font-weight: 900; 
+            color: #f87171; 
+            margin-bottom: 10px; 
+            font-size: 16px; 
+            display: block; 
+            text-align: center; 
+        }
+
+        .absence-header { 
+            background: linear-gradient(135, #f87171, #ef4444) !important;
+            color: white !important;
+        }
+
+        .back { 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg,#4facfe,#00f2fe); 
+            color: #0f172a; 
+            padding: 15px; 
+            border-radius: 15px; 
+            text-decoration: none; 
+            margin-top: 25px; 
+            font-weight: 900;
+            transition: .3s;
+        }
+
+        .back:hover { transform: scale(1.03); }
+
+        /* زر تبديل الوضع */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: #4facfe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            font-size: 20px;
+            border: none;
+            color: white;
+        }
+
+        #total { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
+<div class="app">
+    <header>نتـيـجة الطـالـب</header>
+    
+    <div class="container">
+        <div class="card">
+            <div id="name" class="name">جاري التحميل...</div>
+            <div id="class" class="info"></div>
+            
+            <div id="rankClass" class="rank"></div>
+            <div id="rankSchool" class="rank"></div>
+            
+            <div id="grades" style="margin-top: 20px;"></div>
+            
+            <span class="absence-title">📊 سجل الغياب</span>
+            <div id="absence_table"></div>
+            
+            <div id="total"></div>
+            <a class="back" href="home.html">
+                <span>↩️</span> العودة للبحث
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// وظيفة تبديل الوضع
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('themeBtn');
+    if (body.getAttribute('data-theme') === 'light') {
+        body.removeAttribute('data-theme');
+        btn.innerHTML = '🌙';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        body.setAttribute('data-theme', 'light');
+        btn.innerHTML = '☀️';
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// تحميل الوضع المحفوظ
+if (localStorage.getItem('theme') === 'light') {
+    document.body.setAttribute('data-theme', 'light');
+    document.getElementById('themeBtn').innerHTML = '☀️';
+}
+
+const params = new URLSearchParams(window.location.search);
+const name = decodeURIComponent(params.get("name"));
+
+fetch("https://script.google.com/macros/s/AKfycbxopBokrO5hVaRqywgOZLD_FXmpLLdzHujFxpcfqWPu2eylieqYs2E-pl9gNYOPY7ym2A/exec")
+.then(res => res.json())
+.then(data => {
+    let student = data.find(s => s.name == name);
+    if(!student){
+        document.getElementById("name").innerText="لم يتم العثور على الطالب";
+        document.getElementById("name").style.color = "#ef4444";
+        return;
+    }
+
+    data.sort((a,b)=> b.total - a.total);
+    let schoolRank = data.findIndex(s => s.name == name) + 1;
+    let sameClass = data.filter(s => s.grade == student.grade);
+    sameClass.sort((a,b)=> b.total - a.total);
+    let classRank = sameClass.findIndex(s => s.name == name) + 1;
+
+    document.getElementById("name").innerText = student.name;
+    document.getElementById("class").innerText = "الصف: " + student.grade;
+    document.getElementById("rankClass").innerText = "🏆 ترتيب الطالب في الصف: " + classRank;
+    document.getElementById("rankSchool").innerText = "🌍 ترتيب الطالب على المدرسة: " + schoolRank;
+
+    const createRow = (label, g1, g2, g3) => `
+        <div class="subject-row">
+            <span class="subject-name">${label}</span>
+            <span class="grade-val">${g1 || '0'}</span>
+            <span class="grade-val">${g2 || '0'}</span>
+            <span class="grade-val">${g3 || '0'}</span>
+        </div>`;
+
+    let studentGrade = student.grade;
+    let gradesHtml = `
+    <div class="grades-container">
+        <div class="subject-row subject-header">
+            <span class="subject-name">المادة</span>
+            <span>ش 1</span>
+            <span>ش 2</span>
+            <span>النهائي</span>
+        </div>`;
+
+    gradesHtml += createRow("إسلامية", student.islamic1, student.islamic2, student.islamic3);
+    gradesHtml += createRow("اللغة العربية", student.arabic1, student.arabic2, student.arabic3);
+    gradesHtml += createRow("اللغة الانجليزية", student.english1, student.english2, student.english3);
+    gradesHtml += createRow("رياضيات", student.math1, student.math2, student.math3);
+    gradesHtml += createRow("أحياء", student.biology1, student.biology2, student.biology3);
+    gradesHtml += createRow("كيمياء", student.chemistry1, student.chemistry2, student.chemistry3);
+    gradesHtml += createRow("فيزياء", student.physics1, student.physics2, student.physics3);
+    gradesHtml += createRow("اجتماعيات", student.social1, student.social2, student.social3);
+
+    let isThirdMid = studentGrade.includes("الثالث متوسط");
+    let isFourthFifthScientific = studentGrade.includes("الرابع العلمي") || studentGrade.includes("الخامس العلمي");
+    let isSixthScientific = studentGrade.includes("السادس علمي");
+    let isFirstSecondMid = studentGrade.includes("الأول متوسط") || studentGrade.includes("الثاني متوسط");
+
+    if (!isThirdMid && !isSixthScientific && !isFirstSecondMid) {
+        gradesHtml += createRow("اللغة الكردية", student.kordy1, student.kordy2, student.kordy3);
+    }
+
+    if (!isThirdMid && !isFourthFifthScientific && !isSixthScientific && !isFirstSecondMid) {
+        gradesHtml += createRow("تاريخ", student.history1, student.history2, student.history3);
+        gradesHtml += createRow("جغرافية", student.geography1, student.geography2, student.geography3);
+        gradesHtml += createRow("اقتصاد", student.economy1, student.economy2, student.economy3);
+    }
+
+    gradesHtml += `</div>`;
+    document.getElementById("grades").innerHTML = gradesHtml;
+
+    let absenceHtml = `
+    <div class="grades-container" style="border-color: #f87171;">
+        <div class="subject-row subject-header absence-header">
+            <span class="subject-name" style="color:white">أيام الغياب</span>
+            <span>ش 1</span>
+            <span>ش 2</span>
+            <span>ش 3</span>
+        </div>
+        ${createRow("المجموع", student.absence1, student.absence2, student.absence3)}
+    </div>`;
+    
+    document.getElementById("absence_table").innerHTML = absenceHtml;
+});
+</script>
+</body>
+</html>
