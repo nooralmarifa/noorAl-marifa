@@ -88,9 +88,38 @@ body {
     clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
+/* ابحث عن قسم الميديا كويري @media (max-width: 768px) واستبدله بهذا أو أضفه */
+
 @media (max-width: 768px) {
-    .hero-text { padding: 40px 20px; text-align: center; }
-    .hero-image { clip-path: none; height: 200px; }
+    /* 1. ضبط الهيدر في الهاتف */
+    .hero-text { 
+        padding: 40px 20px; 
+        text-align: center; 
+    }
+    .hero-image { 
+        clip-path: none; 
+        height: 250px; /* زيادة ارتفاع صورة الهيدر قليلاً */
+    }
+
+    /* 2. تنزيل السلايدر لأسفل لمنع التداخل مع الهيدر */
+    .slider-wrapper {
+        margin: 20px auto 40px; /* إلغاء الـ margin السالب وتغييره لقيمة موجبة */
+        padding: 0 10px;
+    }
+
+    /* 3. تكبير ارتفاع السلايدر في الهاتف */
+    .slider-container {
+        aspect-ratio: 4 / 3; /* تغيير النسبة لتصبح الصورة مربعة أكثر وأكبر في الطول */
+        max-height: 400px;
+        border-width: 2px; /* تقليل عرض الإطار قليلاً ليناسب الشاشة الصغيرة */
+    }
+
+    /* 4. تعديل فقاعة الواتساب لتناسب الهواتف ولا تغطي الشاشة */
+    .whatsapp-msg {
+        right: 65px;
+        font-size: 12px;
+        padding: 5px 10px;
+    }
 }
 
 /* ===== السلايدر الاحترافي (تأثير Blur الخلفي) ===== */
