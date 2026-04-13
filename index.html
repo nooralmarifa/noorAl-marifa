@@ -1,368 +1,333 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ثانوية نور المعرفة</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثانوية نور المعرفة الأهلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
-
 :root {
-  /* متغيرات الألوان للوضع الليلي (الافتراضي) */
-  --bg-gradient: linear-gradient(135deg,#0f172a,#1e293b);
-  --card-bg-gradient: linear-gradient(135deg,#1f2937,#111827);
-  --text-color: white;
-  --small-card-bg: #1f2937;
-  --small-card-hover-bg: #374151;
-  --footer-color: #aaa;
-  --big-btn-text: white;
+  --bg-dark: #0f172a;
+  --primary-blue: #1e3a8a;
+  --accent-blue: #4facfe;
+  --card-bg: #1f2937;
+  --text-white: #ffffff;
+  --sub-text: #94a3b8;
 }
 
 [data-theme="light"] {
-  /* متغيرات الألوان للوضع النهاري */
-  --bg-gradient: linear-gradient(135deg,#e2e8f0,#f1f5f9);
-  --card-bg-gradient: linear-gradient(135deg,#ffffff,#f8fafc);
-  --text-color: #1e293b;
-  --small-card-bg: #f1f5f9;
-  --small-card-hover-bg: #e2e8f0;
-  --footer-color: #475569;
-  --big-btn-text: #0f172a; /* لون غامق للنص داخل الزر الأزرق ليتناسب مع الوضع الفاتح */
+  --bg-dark: #f1f5f9;
+  --primary-blue: #ffffff;
+  --accent-blue: #2563eb;
+  --card-bg: #ffffff;
+  --text-white: #1e293b;
+  --sub-text: #64748b;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Cairo', sans-serif;
-transition: background 0.3s ease, color 0.3s ease; /* إضافة تأثير ناعم عند التحويل */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
-body{
-direction:rtl;
-background: var(--bg-gradient);
-color: var(--text-color);
+body {
+    direction: rtl;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    overflow-x: hidden;
 }
 
 /* ===== الهيدر ===== */
-
-.hero{
-padding:40px 20px;
-text-align:center;
+.hero-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #1e293b; 
+    min-height: 400px;
+    position: relative;
 }
 
-.logo{
-width:130px;
-height:130px;
-margin-bottom:15px;
-border-radius:50%;
-object-fit:cover;
-border:3px solid #4facfe;
-box-shadow:0 5px 15px rgba(0,0,0,0.4);
+.hero-text {
+    flex: 1;
+    padding: 60px;
+    min-width: 350px;
+    z-index: 2;
 }
 
-.school-name{
-font-size:32px;
-font-weight:900;
-margin-bottom:10px;
+.hero-text h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
 }
 
-.subtitle{
-font-size:16px;
-opacity:.8;
+.hero-image {
+    flex: 1;
+    min-width: 350px;
+    height: 400px;
+    /* استبدال الرابط باسم ملف صورتك */
+    background-image: url('2.jpeg'); 
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
-/* ===== الكروت ===== */
-
-.container{
-padding:20px;
-display:flex;
-flex-direction:column;
-gap:20px;
+@media (max-width: 768px) {
+    .hero-text { padding: 40px 20px; text-align: center; }
+    .hero-image { clip-path: none; height: 200px; }
 }
 
-.card{
-background: var(--card-bg-gradient);
-border-radius:20px;
-padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
-transition:.3s;
+/* ===== السلايدر الاحترافي ===== */
+.slider-wrapper {
+    max-width: 1200px;
+    margin: -40px auto 40px;
+    padding: 0 15px;
+    position: relative;
+    z-index: 10;
 }
 
-.card:hover{
-transform:translateY(-5px);
+.slider-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 550px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    border: 4px solid var(--accent-blue);
+    background: #000;
 }
 
-/* زر كبير */
-
-.big-btn{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:18px;
-border-radius:15px;
-background:linear-gradient(135deg,#4facfe,#00f2fe);
-color: var(--big-btn-text);
-text-decoration:none;
-font-size:18px;
-font-weight:bold;
-transition:.3s;
+.slide {
+    width: 100%; height: 100%; object-fit: contain;
+    position: absolute; top: 0; left: 0;
+    opacity: 0; transition: opacity 1s ease-in-out;
 }
 
-.big-btn:hover{
-transform:scale(1.03);
+.slide.active { opacity: 1; }
+
+.slider-dots {
+    position: absolute; bottom: 20px; left: 50%;
+    transform: translateX(-50%); display: flex; gap: 10px; z-index: 15;
 }
 
-/* معلومات */
+.dot { width: 10px; height: 10px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; }
+.dot.active { background: var(--accent-blue); width: 25px; border-radius: 10px; }
 
-.info{
-line-height:1.9;
-font-size:15px;
-opacity:.9;
+/* ===== قسم المميزات (مثل الصورة التي أرفقتها) ===== */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto 50px;
+    padding: 0 20px;
 }
 
-/* شبكة */
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
+.feature-item {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: right;
+    border-right: 5px solid var(--accent-blue);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.small-card{
-background: var(--small-card-bg);
-padding:15px;
-border-radius:15px;
-text-align:center;
-transition:.3s;
+.feature-icon { font-size: 40px; margin-bottom: 15px; display: block; }
+.feature-item h3 { font-size: 22px; color: var(--accent-blue); margin-bottom: 10px; }
+.feature-item p { font-size: 15px; color: var(--sub-text); line-height: 1.7; }
+
+/* ===== الحاوية الرئيسية ===== */
+.info-container {
+    max-width: 1200px;
+    margin: 0 auto 50px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
 }
 
-.small-card:hover{
-background: var(--small-card-hover-bg);
+.card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border-bottom: 5px solid var(--accent-blue);
+    display: flex; flex-direction: column; justify-content: space-between;
 }
 
-/* ===== المدرسين ===== */
-
-.teacher-card{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background: var(--card-bg-gradient);
-border-radius:15px;
-padding:15px;
-margin-top:10px;
-transition:.3s;
-border-right:4px solid #4facfe;
+.portal-btn {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #0f172a; text-decoration: none; padding: 18px;
+    border-radius: 12px; font-weight: 900; font-size: 22px;
+    margin-top: 15px; box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
 }
 
-.teacher-card:hover{
-transform:scale(1.02);
+/* ===== تواصل معنا ===== */
+.contact-list { list-style: none; margin-top: 15px; }
+.contact-list li { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+.contact-list li b { color: var(--accent-blue); }
+
+.theme-switch-btn { 
+    position: fixed; bottom: 25px; left: 25px; z-index: 1000;
+    background: var(--accent-blue); border: none; width: 50px; height: 50px; 
+    border-radius: 50%; cursor: pointer; font-size: 20px;
 }
 
-.teacher-name{
-font-size:16px;
-font-weight:bold;
+/* زر واتساب عائم */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 2000;
+    transition: 0.3s;
+    text-decoration: none;
 }
 
-.teacher-subject{
-font-size:13px;
-opacity:.8;
-margin-top:5px;
+.whatsapp-float img {
+    width: 32px;
+    height: 32px;
 }
 
-/* الفوتر */
-
-.footer{
-text-align:center;
-padding:15px;
-font-size:13px;
-color: var(--footer-color);
+.whatsapp-float:hover {
+    transform: scale(1.1);
 }
 
-/* ===== زر تبديل الوضع (ليلي/نهاري) ===== */
-.theme-switch-wrapper {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 100;
+/* حركة بسيطة */
+.whatsapp-float::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #25D366;
+    opacity: 0.5;
+    animation: pulse 2s infinite;
+    z-index: -1;
 }
 
-.theme-switch-btn {
-  background: linear-gradient(135deg,#4facfe,#00f2fe);
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #0f172a; /* لون الأيقونة */
-  transition: transform 0.3s ease;
-}
-
-.theme-switch-btn:hover {
-  transform: scale(1.1);
-}
-
-/* أيقونات الوضع */
-.theme-switch-btn .sun-icon {
-  display: none; /* مخفية في الوضع الليلي الافتراضي */
-}
-
-[data-theme="light"] .theme-switch-btn .moon-icon {
-  display: none; /* مخفية في الوضع النهاري */
-}
-
-[data-theme="light"] .theme-switch-btn .sun-icon {
-  display: block; /* ظاهرة في الوضع النهاري */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    70% { transform: scale(1.5); opacity: 0; }
+    100% { transform: scale(1.5); opacity: 0; }
 }
 
 </style>
-
 </head>
-
 <body>
 
-<div class="theme-switch-wrapper">
-  <button class="theme-switch-btn" id="theme-switch-btn" aria-label="تبديل الوضع الليلي والنهاري">
-    <span class="moon-icon">🌙</span>
-    <span class="sun-icon">☀️</span>
-  </button>
+<button class="theme-switch-btn" id="theme-switch-btn">🌙</button>
+
+<section class="hero-section">
+    <div class="hero-text">
+        <img src="logo.jpeg" style="width: 80px; margin-bottom: 15px; border-radius: 50%; border: 2px solid white;">
+        <h1>ثانوية نور المعرفة<br>الأهلية المختلطة</h1>
+        <p>مرحباً بكم في منصتكم التعليمية.. حيث تضاء العقول بنور المعرفة وتصنع الأجيال لمستقبل أفضل.</p>
+    </div>
+    <div class="hero-image"></div>
+</section>
+
+<div class="slider-wrapper">
+    <div class="slider-container">
+        <img src="1.jpeg" class="slide active">
+        <img src="2.jpeg" class="slide">
+        <img src="3.jpeg" class="slide">
+        <img src="4.jpeg" class="slide">
+        <img src="5.jpeg" class="slide">
+        <img src="6.jpeg" class="slide">
+        <img src="7.jpeg" class="slide">
+        <img src="8.jpeg" class="slide">
+        <img src="9.jpeg" class="slide">
+        <div class="slider-dots" id="sliderDots"></div>
+    </div>
 </div>
 
-<div class="hero">
-
-<img src="logo.jpeg" class="logo">
-
-<div class="school-name">
-ثانوية نور المعرفة الأهلية
+<div class="features-grid">
+    <div class="feature-item">
+        <span class="feature-icon">🚌</span>
+        <h3>النقل الآمن</h3>
+        <p>تتوفر سيارات لنقل الطلاب، ومتابعة السواق، والاحتفاظ بأوراقهم الثبوتية لضمان حسن تعاملهم ووصول الطلاب إلى منازلهم بأمان.</p>
+    </div>
+    <div class="feature-item">
+        <span class="feature-icon">🎨</span>
+        <h3>التربية الفنية</h3>
+        <p>خصصت مدرستنا مشغلاً لتدريس التربية الفنية والأعمال اليدوية التي من خلالها يتم اكتشاف ودعم مواهب ومهارات الطلاب.</p>
+    </div>
+    <div class="feature-item">
+        <span class="feature-icon">⚽</span>
+        <h3>مساحة اللعب</h3>
+        <p>اللعب جزء مهم في تربية الطلاب في جانب الدعم النفسي والذهني، لذا خصصت مدرستنا مساحة كافية للعب والرياضة.</p>
+    </div>
 </div>
 
-<div class="subtitle">
-نحو تعليم متميز ومستقبل أفضل
+<div class="info-container">
+    <div class="card">
+        <h3>🚀 خدمات المنصة</h3>
+        <p style="margin: 15px 0; opacity: 0.8; line-height: 1.6;">يمكن للطلاب وأولياء الأمور الدخول للمنصة لمتابعة الدرجات والغيابات بكل سهولة.</p>
+        <a href="home.html" class="portal-btn">دخول المنصة <span>←</span></a>
+    </div>
+
+    <div class="card">
+        <h3>📞 تواصل معنا</h3>
+        <ul class="contact-list">
+            <li>📍 <b>العنوان:</b> قضاء الحضر - القيارة - قرية السرت</li>
+            <li>📱 <b>الهاتف:</b> 07774014618</li>
+            
+        </ul>
+        
+    </div>
+
+    
+    </div>
 </div>
 
-</div>
-
-<div class="container">
-
-<div class="card">
-<a href="home.html" class="big-btn">
-📊 مستوى الطالب
-<span>←</span>
-</a>
-</div>
-
-<div class="card">
-<h3>🏫 عن المدرسة</h3>
-<p class="info">
-مدرسة نور المعرفة الأهلية تقدم تعليماً حديثاً يعتمد على أفضل الأساليب التعليمية،
-مع متابعة دقيقة لمستوى الطلاب ونتائجهم.
-</p>
-</div>
-
-<div class="card">
-<h3>⭐ مميزاتنا</h3>
-
-<div class="grid">
-<div class="small-card">📚 تعليم حديث</div>
-<div class="small-card">👨‍🏫 كادر متميز</div>
-<div class="small-card">📊 متابعة مستمرة</div>
-<div class="small-card">🏆 نتائج عالية</div>
-</div>
-
-</div>
-
-<div class="card">
-<h3>📞 تواصل معنا</h3>
-<p class="info">
-📍 قضاء الحضر - القيارة - قرية السرت<br>
-📱 07774014618
-</p>
-</div>
-
-<div class="card">
-
-<h3>👨‍🏫 الهيئة التدريسية</h3>
-
-<div class="teacher-card">
-<div>
-<div class="teacher-name">أ. ابراهيم عبدالله </div>
-<div class="teacher-subject">مدير ثانوية نور المعرفة الأهلية -   مدرس رياضيات</div>
-</div>
-<div>📘</div>
-</div>
-
-<div class="teacher-card">
-<div>
-<div class="teacher-name">أ. أحمد يحيى</div>
-<div class="teacher-subject">هندسة أجهزة طبية- مدرس رياضيات</div>
-</div>
-<div>📖</div>
-</div>
-
-<div class="teacher-card">
-<div>
-<div class="teacher-name">أ. عدنان اللهيبي </div>
-<div class="teacher-subject">مدرس فيزياء</div>
-</div>
-<div>⚡</div>
-</div>
-
-<div class="teacher-card">
-<div>
-<div class="teacher-name">أ. شهاب أحمد  </div>
-<div class="teacher-subject">مدرس فيزياء</div>
-</div>
-<div>⚡</div>
-</div>
-
-</div>
-
-</div>
-
-<div class="footer">
-  ثانوية نور المعرفة الأهلية &copy; ٢٠٢٤
-</div>
+<footer style="text-align:center; padding: 30px; opacity: 0.5;">ثانوية نور المعرفة الأهلية المختلطة &copy; ٢٠٢٤</footer>
 
 <script>
-  // الحصول على الزر وجسم الصفحة
-  const themeSwitchBtn = document.getElementById('theme-switch-btn');
-  const body = document.body;
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('sliderDots');
 
-  // التحقق من وجود تفضيل سابق للمستخدم محفوض في التخزين المحلي (LocalStorage)
-  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+    });
 
-  // إذا وجد تفضيل سابق، قم بتطبيقه وتغيير الأيقونة
-  if (currentTheme) {
-      body.setAttribute('data-theme', currentTheme);
-  } else {
-      // الوضع الافتراضي هو الليلي، لذا نتأكد من عدم وجود سمة النهاري
-      body.removeAttribute('data-theme');
-  }
+    const dots = document.querySelectorAll('.dot');
+    function goToSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        currentSlide = n;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
 
-  // إضافة مستمع للحدث (النقر) على الزر
-  themeSwitchBtn.addEventListener('click', function() {
-      // التحقق من الوضع الحالي
-      if (body.getAttribute('data-theme') === 'light') {
-          // إذا كان نهارياً، حوله لليلي (احذف السمة)
-          body.removeAttribute('data-theme');
-          // احفظ التفضيل كـ 'dark'
-          localStorage.setItem('theme', 'dark');
-      } else {
-          // إذا كان ليلياً (أو افتراضياً)، حوله لنهاري
-          body.setAttribute('data-theme', 'light');
-          // احفظ التفضيل كـ 'light'
-          localStorage.setItem('theme', 'light');
-      }
-  });
+    setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4000);
+
+    const themeBtn = document.getElementById('theme-switch-btn');
+    themeBtn.addEventListener('click', () => {
+        const isLight = document.body.getAttribute('data-theme') === 'light';
+        document.body.setAttribute('data-theme', isLight ? '' : 'light');
+        themeBtn.innerHTML = isLight ? '🌙' : '☀️';
+    });
 </script>
+
+<a href="https://wa.me/9647774014618" target="_blank" class="whatsapp-float">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30">
+</a>
 
 </body>
 </html>
